@@ -9,8 +9,10 @@ logging:
 
 spring:
   datasource:
-    url: jdbc:h2:mem:testdb
-    username: sa
+#    url: jdbc:h2:mem:testdb
+    url: jdbc:mysql://localhost:3306/test
+#    username: sa
+    username: root
   jpa:
     open-in-view: false
     defer-datasource-initialization: true
