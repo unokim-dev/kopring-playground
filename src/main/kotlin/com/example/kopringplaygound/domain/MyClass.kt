@@ -1,3 +1,5 @@
 package com.example.kopringplaygound.domain
 
-class MyClass(str: String)
+data class MyClass(val str: String, val inner: InnerClass) {
+    data class InnerClass(val name: String)
+}
