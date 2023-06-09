@@ -5,7 +5,7 @@ logging:
   level:
     com.example.kopringplayground: debug
     org.springframework.web.servlet: debug
-    org.hibernate.type.descriptor.sql.BasicBinder: trace
+    org.hibernate.orm.jdbc.bind: trace
 
 spring:
   datasource:
@@ -16,7 +16,7 @@ spring:
   jpa:
     open-in-view: false
     defer-datasource-initialization: true
-    hibernate.ddl-auto: create
+    hibernate.ddl-auto: none
     show-sql: true
     properties:
       hibernate.format_sql: true
