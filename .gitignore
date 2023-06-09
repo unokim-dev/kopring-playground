@@ -1,6 +1,9 @@
 # Created by https://www.toptal.com/developers/gitignore/api/kotlin,gradle,intellij+all,visualstudiocode,macos,windows
 # Edit at https://www.toptal.com/developers/gitignore?templates=kotlin,gradle,intellij+all,visualstudiocode,macos,windows
 
+# TODO: 알 수 없는 이유 때문에 안 생겨야 하는 bin 폴더가 생김
+bin/
+
 ### JPA Buddy
 .jpb/
 
