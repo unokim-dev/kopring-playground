@@ -2,6 +2,8 @@ package com.example.kopringplaygound.repository
 
 import com.example.kopringplaygound.config.JpaConfig
 import com.example.kopringplaygound.domain.AuditingTable
+import com.example.kopringplaygound.domain.Book
+import com.example.kopringplaygound.domain.Student
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.RepeatedTest
 import org.junit.jupiter.api.Test
@@ -9,13 +11,44 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 import org.springframework.context.annotation.Import
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing
+import org.springframework.test.annotation.Commit
+import java.time.LocalDateTime
 
 @Import(JpaConfig::class)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @DataJpaTest
 class JpaActualDBTest @Autowired constructor(
     private val auditingTableRepository: AuditingTableRepository,
+    private val bookRepository: BookRepository,
+    private val studentRepository: StudentRepository,
 ) {
+
+    @Test
+    fun manyToOneTest() {
+        // Arrange
+
+        // Act
+        val result = bookRepository.save(Book.of("math", true))
+
+        // Assert
+        println(result)
+    }
+
+    @Commit
+    @Test
+    fun oneToManyTest() {
+        // Arrange
+
+        // Act
+        val result = studentRepository.save(
+            Student.of(mutableSetOf(Book.of("math", true)), "uno", Student.Grade.A)
+        )
+
+        // Assert
+        println(result)
+    }
+
 
     @Test
     fun insert() {
