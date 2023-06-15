@@ -28,6 +28,16 @@ internal class LogicTest {
     }
 
     @Test
+    fun subListTest() {
+        val list = listOf(1, 2, 3, 4, 5, 6, 7)
+
+        println(list.subList(0, 6))
+        println(list.subList(0, 7))
+        println(list.subList(6, 7))
+        println(list.subList(7, 7))
+    }
+
+    @Test
     fun qusetionMarkTest() {
         val a: QuestionFields? = null
         val asdf: Long? = null
