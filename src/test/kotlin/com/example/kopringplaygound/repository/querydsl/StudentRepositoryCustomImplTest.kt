@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 import org.springframework.context.annotation.Import
+import org.springframework.data.domain.PageRequest
 import org.springframework.test.annotation.Commit
+import java.awt.print.Pageable
 
 @Import(JpaConfig::class)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -23,34 +25,34 @@ class StudentRepositoryCustomImplTest @Autowired constructor(
     @Test
     fun querydslTest() {
         // Arrange
-        studentRepository.saveAll(
-            listOf(
-                Student.of("uno", Student.Grade.A).apply {
-                    books.addAll(
-                        listOf(
-                            Book.of("math", true),
-                            Book.of("math2", true),
-                            Book.of("math3", true),
-                            Book.of("math4", true),
-                        )
-                    )
-                },
-                Student.of("mark", Student.Grade.B).apply {
-                    books.addAll(
-                        listOf(
-                            Book.of("english", true),
-                            Book.of("english2", true),
-                            Book.of("english3", true),
-                        )
-                    )
-                }
-            )
-        )
+//        studentRepository.saveAll(
+//            listOf(
+//                Student.of("uno", Student.Grade.A).apply {
+//                    books.addAll(
+//                        listOf(
+//                            Book.of("math", true),
+//                            Book.of("math2", true),
+//                            Book.of("math3", true),
+//                            Book.of("math4", true),
+//                        )
+//                    )
+//                },
+//                Student.of("mark", Student.Grade.B).apply {
+//                    books.addAll(
+//                        listOf(
+//                            Book.of("english", true),
+//                            Book.of("english2", true),
+//                            Book.of("english3", true),
+//                        )
+//                    )
+//                }
+//            )
+//        )
 
         println("\n\n\n\n\n")
 
         // Act
-        val result = studentRepository.testQuerydsl()
+        val result = studentRepository.testQuerydsl(PageRequest.of(1, 1))
 
         // Assert
         println(result)
