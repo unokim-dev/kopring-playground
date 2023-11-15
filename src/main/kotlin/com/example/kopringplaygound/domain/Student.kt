@@ -1,5 +1,6 @@
 package com.example.kopringplaygound.domain
 
+import com.example.kopringplaygound.repository.SoftDeleteEntity
 import jakarta.persistence.CascadeType
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
@@ -10,9 +11,16 @@ import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 import jakarta.persistence.JoinColumn
 import jakarta.persistence.OneToMany
+import jakarta.persistence.Table
+import jakarta.persistence.Transient
+import jakarta.persistence.UniqueConstraint
+import java.time.LocalDateTime
 
+@Table(
+    uniqueConstraints = [UniqueConstraint(columnNames = ["name", "grade", "deletedAt"])]
+)
 @Entity
-class Student protected constructor() : AuditingFields() {
+class Student protected constructor() : AuditingFields(), SoftDeleteEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null
@@ -26,6 +34,12 @@ class Student protected constructor() : AuditingFields() {
 
     @Enumerated(EnumType.STRING)
     var grade: Grade? = null
+
+    //    @Transient
+    @Column(insertable = false, updatable = false)
+//    var deleted: Boolean = false
+//        protected set
+    override var deletedAt: LocalDateTime? = null
 
     private constructor(books: MutableSet<Book>, name: String?, grade: Grade?) : this() {
         this.books = books
@@ -46,6 +60,12 @@ class Student protected constructor() : AuditingFields() {
     enum class Grade { A, B, C, D, F }
 
     override fun toString(): String {
-        return "Student(id=$id, name=$name, grade=$grade, books=$books)"
+        return "Student(" +
+                "id=$id, " +
+                "books=$books, " +
+                "name=$name, " +
+                "grade=$grade, " +
+                "deletedAt=$deletedAt" +
+                ")"
     }
 }

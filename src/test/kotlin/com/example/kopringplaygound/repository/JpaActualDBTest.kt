@@ -25,6 +25,21 @@ class JpaActualDBTest @Autowired constructor(
 ) {
 
     @Test
+    fun softDelete() {
+        // Arrange
+        val student = Student.of("uno", Student.Grade.A)
+
+        // Act
+        val after = studentRepository.saveAndFlush(student)
+        println(after)
+        studentRepository.delete(after)
+        studentRepository.flush()
+
+
+        // Assert
+    }
+
+    @Test
     fun `너무 긴 문자열 입력으로 인한 db 예외 발생 처리`() {
         // Arrange
         val student = studentRepository.save(Student.of("uno", Student.Grade.B))
