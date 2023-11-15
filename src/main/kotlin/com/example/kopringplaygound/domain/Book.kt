@@ -1,7 +1,9 @@
 package com.example.kopringplaygound.domain
 
+import com.example.kopringplaygound.domain.embeddable.MyDiscount
 import jakarta.persistence.CascadeType
 import jakarta.persistence.Column
+import jakarta.persistence.Embedded
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
@@ -20,8 +22,11 @@ class Book protected constructor() {
 //    @Column(nullable = false)
 //    private var studentId: Long? = null
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 50)
     var subject: String? = null
+
+    @Embedded
+    var myDiscount: MyDiscount? = null
 
     private var readable: Boolean? = null
 
@@ -76,7 +81,7 @@ class Book protected constructor() {
 //    override fun hashCode(): Int = id.hashCode()
 
     override fun toString(): String {
-        return "Book(id=$id, subject=$subject, readable=$readable)"
+        return "Book(id=$id, subject=$subject, readable=$readable, myDiscount=$myDiscount)"
     }
 
 

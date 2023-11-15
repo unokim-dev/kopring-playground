@@ -1,5 +1,6 @@
 package com.example.kopringplaygound
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonValue
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -16,6 +17,13 @@ class KopringPlaygoundApplicationTests(@Autowired private val objectMapper: Obje
         println(objectMapper.readValue("{\"name\":\"test\",\"age\":10,\"testValue\":\"잘했네\"}", TestClass::class.java))
     }
 
+    @Test
+    fun jsonIgnoreTest() {
+        val  json = """{"age": 18}"""
+
+        println(objectMapper.readValue(json, TestJsonBody::class.java))
+    }
+
     data class TestClass(
         val name: String,
         val age: Int,
@@ -27,4 +35,7 @@ class KopringPlaygoundApplicationTests(@Autowired private val objectMapper: Obje
         B("했네"),
         C("그러네"),
     }
+
+//    @JsonIgnoreProperties(ignoreUnknown = false)
+    data class TestJsonBody(val name: String?, val age: Int?)
 }

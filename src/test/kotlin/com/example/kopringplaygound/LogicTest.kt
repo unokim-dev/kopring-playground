@@ -1,6 +1,7 @@
 package com.example.kopringplaygound
 
 import com.example.kopringplaygound.domain.MyClass
+import com.example.kopringplaygound.domain.SampleEnum
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -11,13 +12,93 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.assertj.core.api.Assertions
+import org.junit.jupiter.api.RepeatedTest
 import org.junit.jupiter.api.Test
 import java.lang.RuntimeException
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.Period
+import java.util.UUID
 
-internal class LogicTest {
+class LogicTest {
+
+    @Test
+    fun questionTest() {
+        val a = Outer(Outer.Inner("test"))
+        val b = Outer(Outer.Inner(null))
+        val c = Outer(null)
+
+        a.inner?.str = "hello"
+        b.inner?.str = "hello"
+        c.inner?.str = "hello"
+
+        println(a)
+        println(b)
+        println(c)
+    }
+
+    @Test
+    fun stringIndentTest() {
+        val str = """
+            여행패키지 예약이 실패했습니다.
+            ■ 상품명 : 1
+            ■ 주문번호 : 2
+            이용에 불편을 드려 죄송합니다. 트립스토어 고객센터에서 예약을 도와드릴 수 있도록 곧 연락드리겠습니다.
+        """.trimIndent()
+
+        println(str)
+    }
+
+    data class Outer(var inner: Inner? = null) {
+        data class Inner(var str: String?)
+    }
+
+    @RepeatedTest(100)
+    fun uuidTest() {
+        val uuidStr = UUID.randomUUID().toString()
+        println("uuidStr = $uuidStr")
+        println("uuid = ${UUID.fromString("Asdf")}")
+    }
+
+    @Test
+    fun nullTest() {
+        val number: Int? = null
+        println(number!!)
+    }
+
+    @Test
+    fun listWhenTest() {
+        val list:List<String> = listOf(SampleEnum.AAA.name, SampleEnum.BBB.name)
+
+        when (list::contains) {
+            listOf("AAA") -> println("111")
+            listOf("BBB") -> println("222")
+        }
+
+    }
+
+    @Test
+    fun CSRFTest() {
+        val str = "hello there!"
+
+        println(str)
+        println("case 1 - $str")
+        println("case 2 - \r$str")
+        println("case 3 - \n$str")
+        println("case 4 - \r\n$str")
+    }
+
+    @Test
+    fun listTest() {
+        // Arrange
+        val list = listOf<String>()
+
+        // Act
+        println(list.last())
+
+        // Assert
+
+    }
 
     @Test
     fun substringTest() {
@@ -56,7 +137,16 @@ internal class LogicTest {
 
     @Test
     fun stringContains() {
-        println("asdfasdf".contains("asdf"))
+        assert("asdfasdf".contains("asdf"))
+        assert("asdf" in "asdfasdf")
+    }
+
+    @Test
+    fun listContains() {
+        assert(listOf("asdf", "zxcv", "qwer").contains("asdf"))
+        assert(!listOf("asdf", "zxcv", "qwer").contains("1234"))
+        assert("asdf" in listOf("asdf", "zxcv", "qwer"))
+        assert("1234" !in listOf("asdf", "zxcv", "qwer"))
     }
 
     @Test

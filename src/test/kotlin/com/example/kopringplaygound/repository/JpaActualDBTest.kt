@@ -25,6 +25,19 @@ class JpaActualDBTest @Autowired constructor(
 ) {
 
     @Test
+    fun `너무 긴 문자열 입력으로 인한 db 예외 발생 처리`() {
+        // Arrange
+        val student = studentRepository.save(Student.of("uno", Student.Grade.B))
+        val book = Book.of("너무 긴 문자열_너무 긴 문자열_너무 긴 문자열_너무 긴 문자열_너무 긴 문자열_너무 긴 문자열_너무 긴 문자열", false)
+        student.books.add(book)
+
+        // Act
+        studentRepository.saveAndFlush(student)
+
+        // Assert
+    }
+
+    @Test
     fun manyToOneTest() {
         // Arrange
 
